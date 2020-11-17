@@ -1,37 +1,40 @@
-import {useState, useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import './Users.css'
 
 function Users() {
+    let buttonClassName = 'button'
 
     const [users, setAllUsers] = useState([]);
+    const [dropDownOpen, setDropDownOpen]= useState(false);
 
     const fetchUsers = async () => {
         const response = await fetch(`https://jsonplaceholder.typicode.com/users`);
         const allUsers = await response.json();
         setAllUsers(allUsers);
+        setDropDownOpen(true);
+
+
     }
 
     const clickOnUser = (user) => {
         console.log(user);
-        setAllUsers([])
+        setDropDownOpen(false)
+
     }
-
     return (
-
-        <div className='App'>
-            <button className='button' onClick={fetchUsers}>All Users</button>
+        <div>
+            <button className={buttonClassName} onClick={fetchUsers}>All Users</button>
             <div>
-                {users && (
+                {users && dropDownOpen && (
                     <div>{users.map(user =>
-                        <h3 key={user.id} onClick={()=>clickOnUser(user)}>
-                            {user.name} <hr/>
-                        </h3> )}
-
+                        <h3 key={user.id} onClick={() => clickOnUser(user)}>
+                            {user.name}
+                            <hr/>
+                        </h3>)}
                     </div>
                 )}
             </div>
         </div>
     )
 }
-
 export default Users;

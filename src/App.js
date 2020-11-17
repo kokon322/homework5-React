@@ -6,7 +6,7 @@ import Users from "./components/Users";
 function App() {
 
     return (
-        <div>
+        <div className='App'>
             <Users/>
         </div>
     )
